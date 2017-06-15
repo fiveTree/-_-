@@ -1,0 +1,59 @@
+<view class="pay">
+  <view class="title">支付方式</view>
+  <view catchtap="wx_pay" class="wx_pay">
+    <i class="icon {{payment_mode==1?'active':''}}" type="String"></i>
+    <text>微信支付</text>
+  </view>
+  <view catchtap="offline_pay" class="offline_pay">
+    <i class="icon {{payment_mode==0?'active':''}}" type="String"></i>
+    <text>对公打款</text>
+  </view>
+  <block  wx:if="{{balance!=0}}">
+    <view catchtap="wallet_pay" class="wallet_pay">
+      <i class="icon {{payment_mode==2?'active':''}}" type="String"></i>
+      <text>钱包支付(余额:{{balance/100}}元)</text>
+    </view>
+  </block>
+  <block wx:if="{{balance==0}}">
+    <view class="wallet_pay">
+      <i class="icon" type="String" style="background:#e8e8e8;border:none;"></i>
+      <text style="color:#999">钱包支付(余额不足)</text>
+    </view>
+  </block>
+</view>
+<view catchtap="pay" class="save">确定</view>
+<!--输入钱包密码-->
+<view wx:if="{{wallets_password_flag}}" class="wallets-password">
+  <view class="input-content-wrap">
+    <view class="top">
+      <view catchtap="close_wallets_password" class="close">×</view>
+      <view class="txt">请输入支付密码</view>
+      <view catchtap="modify_password" class="forget">忘记密码</view>
+    </view>
+    <view class="actual_fee">
+      <span>￥</span>
+      <text>{{actual_fee/100}}</text>
+    </view>
+    <view catchtap="set_Focus" class="input-password-wrap">
+      <view class="password_dot">
+        <i wx:if="{{wallets_password.length>=1}}"></i>
+      </view>
+      <view class="password_dot">
+        <i wx:if="{{wallets_password.length>=2}}"></i>
+      </view>
+      <view class="password_dot">
+        <i wx:if="{{wallets_password.length>=3}}"></i>
+      </view>
+      <view class="password_dot">
+        <i wx:if="{{wallets_password.length>=4}}"></i>
+      </view>
+      <view class="password_dot">
+        <i wx:if="{{wallets_password.length>=5}}"></i>
+      </view>
+      <view class="password_dot">
+        <i wx:if="{{wallets_password.length>=6}}"></i>
+      </view>
+    </view>
+  </view>
+  <input bindinput="set_wallets_password" class="input-content" password type="number" focus="{{isFocus}}" maxlength="6" />
+</view>
